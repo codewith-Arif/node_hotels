@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// hw-> find menu items by taste 
+// hw-> find Menu Items by taste type
 router.get('/:tasteType', async (req, res) => {
   try{
   const tasteType = req.params.tasteType; // Extract the taste type from the URL parameter
@@ -46,4 +46,48 @@ router.get('/:tasteType', async (req, res) => {
   }
 })
 
+// PUT method to update menu item details
+router.put('/:id', async (req, res) => {
+  try {
+    const menuId = req.params.id; // Extract the ID from the URL parameter
+    const updatedMenuData = req.body; // Updated data for the menu item
+    const response = await MenuItem.findByIdAndUpdate(
+    menuId,
+    updatedMenuData,
+    {
+      new: true, // Return the updated document
+      runValidators: true // Run Mongoose validation
+    }
+  );
+    // Check if the menu item was found and updated
+    if (!response) {
+      return res.status(404).json({ error: 'Menu item not found' });
+    }
+    console.log('Menu item updated');
+    res.status(200).json(response); // Send the updated person document as a response
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// DELETE method to delete a menu item
+router.delete('/:id', async (req, res) => {
+  try {
+    const menuId = req.params.id; // Extract the ID from the URL parameter
+    const response = await MenuItem.findByIdAndDelete(menuId); // Delete the menu item by ID
+    // Check if the menu item was found and deleted
+    if (!response) {
+      return res.status(404).json({ error: 'Menu item not found' });
+    }
+    console.log('Menu item deleted');
+    // res.status(200).json({ message: 'Menu item deleted successfully' });  // Send success response 
+    res.status(200).json(response); // Send the deleted menu item as a response
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: 'Internal Server Error' }); // Handle errors
+  }
+});
+
+// Export the router to use in the other files
 module.exports = router;

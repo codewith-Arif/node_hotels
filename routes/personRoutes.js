@@ -58,7 +58,7 @@ router.put('/:id', async (req, res) => {
   try {
     const personId = req.params.id; // Extract the ID from the URL parameter
     const updatedPersonData = req.body; // Updated data for the person
-  const response = await Person.findByIdAndUpdate(
+    const response = await Person.findByIdAndUpdate(
     personId,
     updatedPersonData,
     {
@@ -66,7 +66,7 @@ router.put('/:id', async (req, res) => {
       runValidators: true // Run Mongoose validation
     }
   );
-
+    // Check if the person was found and updated
     if (!response) {
       return res.status(404).json({ error: 'Person not found' });
     }
