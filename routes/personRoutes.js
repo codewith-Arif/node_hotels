@@ -36,6 +36,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET method to get person by work type
 router.get('/:workType', async(req, res) =>{
   try{
     const workType = req.params.workType; //Extract the work type from the URL parameter
@@ -52,6 +53,7 @@ router.get('/:workType', async(req, res) =>{
   }
 });
 
+// PUT method to update person details
 router.put('/:id', async (req, res) => {
   try {
     const personId = req.params.id; // Extract the ID from the URL parameter
@@ -76,6 +78,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// DELETE method to remove a person by ID
 router.delete('/:id', async (req, res) => {
   try {
     const personId = req.params.id; // Extract the person ID from the URL parameter
